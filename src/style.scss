@@ -1,0 +1,43 @@
+@import '@jsonforms/vue-vanilla/vanilla.css';
+
+:root {
+  font-family: Figtree, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: #000000;
+  background-color: #f9fafb;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+
+  &__content {
+    flex: 1;
+
+    &-wrapper {
+      display: block;
+      margin: 20px auto;
+      max-width: 1070px;
+      padding: 0 15px;
+    }
+  }
+}
+
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
