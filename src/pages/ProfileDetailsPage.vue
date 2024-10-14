@@ -2,7 +2,7 @@
 import BreadCrumbs from "@/components/BreadCrumbs.vue";
 import AccordionPanel from "@/components/AccordionPanel.vue";
 
-import {JsonForms} from "@jsonforms/vue";
+import {JsonForms, JsonFormsChangeEvent} from "@jsonforms/vue";
 import {vanillaRenderers,} from "@jsonforms/vue-vanilla";
 import {ref} from "vue";
 import NextButton from "@/components/NextButton.vue";
@@ -13,7 +13,6 @@ const layoutRenderers = [
 ];
 
 const schema: JsonSchema = {
-  customErrorMessages: true,
   type: "object",
   properties: {
     forename: {
@@ -92,10 +91,10 @@ const formData = ref({});
 
 const isFormValid = ref<boolean>(false);
 
-const onChange = ({ data, errors}) => {
-
-
- console.log(errors);
+const onChange = (event: JsonFormsChangeEvent) => {
+  const data = event.data;
+  const errors = event.errors;
+  console.log(errors);
 
   // Calculate age based on birthdate if present
   if(data?.birthdate) {
@@ -105,10 +104,10 @@ const onChange = ({ data, errors}) => {
   // Update form data and validity state
   formData.value = data;
   // Update form validity based on errors
-  isFormValid.value = errors.length === 0;
+  isFormValid.value = errors?.length === 0;
 };
 
-const calculateAge = (birthdate) => {
+const calculateAge = (birthdate: string) => {
   const today = new Date();
   const birthDate = new Date(birthdate);
   let age = today.getFullYear() - birthDate.getFullYear();
