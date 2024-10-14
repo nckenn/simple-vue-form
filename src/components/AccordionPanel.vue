@@ -44,6 +44,10 @@ const togglePanel = () => {
   padding: 15px;
   background-color: #FFFFFF;
 
+  &__content {
+    padding: 10px 0 0 0 ;
+  }
+
   &__button {
     padding: 0;
     display: flex;

@@ -1,9 +1,14 @@
 <script setup lang="ts">
 
+type NextButtonProps = {
+  disabled?: boolean;
+}
+
+defineProps<NextButtonProps>();
 </script>
 
 <template>
-  <button type="button" class="next-button" >
+  <button type="button" class="next-button" :disabled="disabled">
     Next
     <img src="@/assets/icons/arrow-right.png" alt="navigation-menu" class="next-button__icon" />
   </button>

@@ -2,27 +2,24 @@
 import BreadCrumbs from "@/components/BreadCrumbs.vue";
 import AccordionPanel from "@/components/AccordionPanel.vue";
 
-import {JsonForms, JsonFormsChangeEvent} from "@jsonforms/vue";
+import {JsonForms} from "@jsonforms/vue";
 import {vanillaRenderers,} from "@jsonforms/vue-vanilla";
 import {ref} from "vue";
 import NextButton from "@/components/NextButton.vue";
-
-type FormData = {
-  forename?: string;
-  surname?: string;
-  birthdate?: string; // Stored as a string in the form of a date
-  email?: string;
-}
+import {JsonSchema} from "@jsonforms/core";
 
 const layoutRenderers = [
   ...vanillaRenderers
 ];
 
-const schema = {
+const schema: JsonSchema = {
+  customErrorMessages: true,
+  type: "object",
   properties: {
     forename: {
       title: "Forename(s)",
       type: "string",
+      minLength: 3,
     },
     surname: {
       title: "Surname",
@@ -31,14 +28,20 @@ const schema = {
     birthdate: {
       title: "Date of Birth",
       type: "string",
-      format: "date"
+      format: "date",
     },
     email: {
       title: "Email Address",
       type: "string",
-      format: "email"
-    }
+      format: "email",
+    },
+    age: {
+      type: "integer",
+      title: "Age",
+      readOnly: true // This field will not be directly editable by the user
+    },
   },
+  required: ["forename", "surname", "birthdate", "email"]
 };
 
 const uiSchema = {
@@ -50,6 +53,7 @@ const uiSchema = {
         {
           type: "Control",
           scope: "#/properties/forename",
+
         },
         {
           type: "Control",
@@ -70,25 +74,12 @@ const uiSchema = {
           rule: {
             effect: "SHOW",
             condition: {
-              scope: "#/properties/birthdate",
+              scope: "#/properties/age",
               schema: {
-                type: "string",
-                format: "date"
+                type: "integer",
+                // Only show if age is 18 or greater
+                minimum: 18
               },
-              // Custom function to calculate age
-              custom: ({ data }: { data: FormData }): boolean => {
-                if (!data.birthdate) {
-                  return false;
-                }
-                const today = new Date();
-                const birthdate = new Date(data.birthdate);
-                let age = today.getFullYear() - birthdate.getFullYear();
-                const monthDiff = today.getMonth() - birthdate.getMonth();
-                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdate.getDate())) {
-                  age--;
-                }
-                return age >= 18;
-              }
             },
           },
         },
@@ -97,15 +88,36 @@ const uiSchema = {
   ],
 };
 
-const data = ref<any>({
-  forename: "John",
-  surname: "Smith",
-  email: ""
-});
+const formData = ref({});
 
-const onChange = (event: JsonFormsChangeEvent) => {
-  data.value = event.data;
+const isFormValid = ref<boolean>(false);
+
+const onChange = ({ data, errors}) => {
+
+
+ console.log(errors);
+
+  // Calculate age based on birthdate if present
+  if(data?.birthdate) {
+    data.age = calculateAge(data.birthdate);
+  }
+
+  // Update form data and validity state
+  formData.value = data;
+  // Update form validity based on errors
+  isFormValid.value = errors.length === 0;
 };
+
+const calculateAge = (birthdate) => {
+  const today = new Date();
+  const birthDate = new Date(birthdate);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
+}
 
 </script>
 
@@ -119,7 +131,7 @@ const onChange = (event: JsonFormsChangeEvent) => {
     <div class="profile-details__content">
       <AccordionPanel title="Details" ariaTitle="Details">
         <json-forms
-            :data="data"
+            :data="formData"
             :renderers="Object.freeze(layoutRenderers)"
             :schema="schema"
             :uischema="uiSchema"
@@ -129,7 +141,7 @@ const onChange = (event: JsonFormsChangeEvent) => {
     </div>
     <div class="profile-details__actions">
       <div class="profile-details__actions-content">
-        <NextButton />
+        <NextButton :disabled="!isFormValid"/>
       </div>
     </div>
   </div>
