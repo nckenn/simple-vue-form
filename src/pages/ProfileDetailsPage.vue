@@ -5,6 +5,7 @@ import AccordionPanel from "@/components/AccordionPanel.vue";
 import {JsonForms, JsonFormsChangeEvent} from "@jsonforms/vue";
 import {vanillaRenderers,} from "@jsonforms/vue-vanilla";
 import {ref} from "vue";
+import NextButton from "@/components/NextButton.vue";
 
 type FormData = {
   forename?: string;
@@ -115,15 +116,22 @@ const onChange = (event: JsonFormsChangeEvent) => {
     <div class="profile-details__info">
       This is the personal information you use to access and manage your account. Your email address will be used for account security, recovery, and notifications.
     </div>
-    <AccordionPanel title="Details" ariaTitle="Details">
-      <json-forms
-          :data="data"
-          :renderers="Object.freeze(layoutRenderers)"
-          :schema="schema"
-          :uischema="uiSchema"
-          @change="onChange"
-      />
-    </AccordionPanel>
+    <div class="profile-details__content">
+      <AccordionPanel title="Details" ariaTitle="Details">
+        <json-forms
+            :data="data"
+            :renderers="Object.freeze(layoutRenderers)"
+            :schema="schema"
+            :uischema="uiSchema"
+            @change="onChange"
+        />
+      </AccordionPanel>
+    </div>
+    <div class="profile-details__actions">
+      <div class="profile-details__actions-content">
+        <NextButton />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -132,6 +140,11 @@ const onChange = (event: JsonFormsChangeEvent) => {
   display: flex;
   gap: 12px;
   flex-direction: column;
+  height: calc(100vh - 78px);
+
+  &__content {
+    flex: 1;
+  }
 
   &__title {
     font-size: 20px;
@@ -149,6 +162,29 @@ const onChange = (event: JsonFormsChangeEvent) => {
     font-weight: 500;
     line-height: 23.4px;
     color: #003366;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    background: #ffffff;
+    height: 64px;
+    padding: 10px 0;
+    border-top: 0.5px solid #dbdcdc;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    &-content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      max-width: 1070px;
+      margin: 0 auto;
+      width: 100%;
+    }
   }
 }
 

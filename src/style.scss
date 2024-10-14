@@ -26,11 +26,12 @@ body {
   min-height: 100vh;
 
   &__content {
+    display: flex;
     flex: 1;
 
     &-wrapper {
       display: block;
-      margin: 20px auto;
+      margin: 20px auto 0 auto;
       max-width: 1070px;
       padding: 0 15px;
     }
