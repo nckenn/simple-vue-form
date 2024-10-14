@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-defineProps({
-  title: { type: String, required: true },
-  ariaTitle: { type: String, required: true }
-});
+type AccordionPanelProps = {
+  title: string;
+  ariaTitle: string;
+}
+
+defineProps<AccordionPanelProps>();
 
 const showPanel = ref(true);
 

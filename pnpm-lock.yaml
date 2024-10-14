@@ -14,6 +14,9 @@ dependencies:
   '@jsonforms/vue-vanilla':
     specifier: ^3.4.0
     version: 3.4.0(@jsonforms/core@3.4.0)(@jsonforms/vue@3.4.0)(vue@3.5.12)
+  '@types/node':
+    specifier: ^22.7.5
+    version: 22.7.5
   vue:
     specifier: ^3.5.10
     version: 3.5.12(typescript@5.6.3)
@@ -30,7 +33,7 @@ devDependencies:
     version: 5.6.3
   vite:
     specifier: ^5.4.8
-    version: 5.4.8(sass@1.79.5)
+    version: 5.4.8(@types/node@22.7.5)(sass@1.79.5)
   vue-tsc:
     specifier: ^2.1.6
     version: 2.1.6(typescript@5.6.3)
@@ -570,6 +573,11 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: false
 
+  /@types/node@22.7.5:
+    resolution: {integrity: sha512-jML7s2NAzMWc//QSJ1a3prpk78cOPchGvXJsC3C6R6PSMoooztvRVQEz89gmBTBY1SPMaqo5teB4uNHPdetShQ==}
+    dependencies:
+      undici-types: 6.19.8
+
   /@vitejs/plugin-vue@5.1.4(vite@5.4.8)(vue@3.5.12):
     resolution: {integrity: sha512-N2XSI2n3sQqp5w7Y/AN/L2XDjBIRGqXko+eDp42sydYSBeJuSm5a1sLf8zakmo8u7tA8NmBgoDLA1HeOESjp9A==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -577,7 +585,7 @@ packages:
       vite: ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.4.8(sass@1.79.5)
+      vite: 5.4.8(@types/node@22.7.5)(sass@1.79.5)
       vue: 3.5.12(typescript@5.6.3)
     dev: true
 
@@ -972,7 +980,10 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  /vite@5.4.8(sass@1.79.5):
+  /undici-types@6.19.8:
+    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
+
+  /vite@5.4.8(@types/node@22.7.5)(sass@1.79.5):
     resolution: {integrity: sha512-FqrItQ4DT1NC4zCUqMB4c4AZORMKIa0m8/URVCZ77OZ/QSNeJ54bU1vrFADbDsuwfIPcgknRkmqakQcgnL4GiQ==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -1003,6 +1014,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 22.7.5
       esbuild: 0.21.5
       postcss: 8.4.47
       rollup: 4.24.0

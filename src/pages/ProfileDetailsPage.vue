@@ -2,19 +2,15 @@
 import BreadCrumbs from "@/components/BreadCrumbs.vue";
 import AccordionPanel from "@/components/AccordionPanel.vue";
 
-import { JsonForms, JsonFormsChangeEvent } from "@jsonforms/vue";
-import {
-  defaultStyles,
-  mergeStyles,
-  vanillaRenderers,
-} from "@jsonforms/vue-vanilla";
-import {onMounted, reactive, ref, shallowRef} from "vue";
+import {JsonForms, JsonFormsChangeEvent} from "@jsonforms/vue";
+import {vanillaRenderers,} from "@jsonforms/vue-vanilla";
+import {ref} from "vue";
 
-type ProfileForm = {
-  forename: string;
-  surname: string;
-  birthdate: string;
-  email: string;
+type FormData = {
+  forename?: string;
+  surname?: string;
+  birthdate?: string; // Stored as a string in the form of a date
+  email?: string;
 }
 
 const layoutRenderers = [
@@ -79,7 +75,7 @@ const uiSchema = {
                 format: "date"
               },
               // Custom function to calculate age
-              test: ({ data }) => {
+              custom: ({ data }: { data: FormData }): boolean => {
                 if (!data.birthdate) {
                   return false;
                 }
@@ -119,7 +115,7 @@ const onChange = (event: JsonFormsChangeEvent) => {
     <div class="profile-details__info">
       This is the personal information you use to access and manage your account. Your email address will be used for account security, recovery, and notifications.
     </div>
-    <AccordionPanel title="Details" aria-title="Details">
+    <AccordionPanel title="Details" ariaTitle="Details">
       <json-forms
           :data="data"
           :renderers="Object.freeze(layoutRenderers)"
