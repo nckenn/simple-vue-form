@@ -1,4 +1,5 @@
 @import '@jsonforms/vue-vanilla/vanilla.css';
+@import '@progress/kendo-theme-default/dist/all.css';
 
 :root {
   font-family: Figtree, sans-serif;
@@ -41,4 +42,8 @@ body {
 
 .rotate-180 {
   transform: rotate(180deg);
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
 }

@@ -6,10 +6,28 @@ import {JsonForms, JsonFormsChangeEvent} from "@jsonforms/vue";
 import {vanillaRenderers,} from "@jsonforms/vue-vanilla";
 import {ref} from "vue";
 import NextButton from "@/components/NextButton.vue";
-import {JsonSchema} from "@jsonforms/core";
+import {isDateControl, isStringControl, JsonSchema, rankWith} from "@jsonforms/core";
+import KendoStringControlRenderer from "@/controls/KendoStringControlRenderer.vue";
+import KendoDateControlRenderer from "@/controls/KendoDateControlRenderer.vue";
+
+const customRenderers = [
+  {
+    tester: rankWith(
+        3,
+        isStringControl,
+    ), renderer: KendoStringControlRenderer
+  },
+  {
+    tester: rankWith(
+        4,
+        isDateControl,
+    ), renderer: KendoDateControlRenderer
+  }
+];
 
 const layoutRenderers = [
-  ...vanillaRenderers
+  ...vanillaRenderers,
+  ...customRenderers
 ];
 
 const schema: JsonSchema = {
@@ -52,7 +70,9 @@ const uiSchema = {
         {
           type: "Control",
           scope: "#/properties/forename",
-
+          options: {
+            placeholder: "Enter Forename",
+          }
         },
         {
           type: "Control",
@@ -66,10 +86,16 @@ const uiSchema = {
         {
           type: "Control",
           scope: "#/properties/surname",
+          options: {
+            placeholder: "Enter Surname",
+          }
         },
         {
           type: "Control",
           scope: "#/properties/email",
+          options: {
+            placeholder: "Enter Email Address",
+          },
           rule: {
             effect: "SHOW",
             condition: {

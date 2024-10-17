@@ -12,7 +12,17 @@
     "@jsonforms/core": "^3.4.0",
     "@jsonforms/vue": "^3.4.0",
     "@jsonforms/vue-vanilla": "^3.4.0",
+    "@progress/kendo-licensing": "^1.3.5",
+    "@progress/kendo-svg-icons": "^3.1.0",
+    "@progress/kendo-theme-default": "^9.1.0",
+    "@progress/kendo-vue-common": "^5.2.0",
+    "@progress/kendo-vue-dateinputs": "^5.2.0",
+    "@progress/kendo-vue-form": "^5.2.0",
+    "@progress/kendo-vue-inputs": "^5.2.0",
+    "@progress/kendo-vue-intl": "^5.2.0",
+    "@progress/kendo-vue-labels": "^5.2.0",
     "@types/node": "^22.7.5",
+    "dayjs": "^1.11.13",
     "vue": "^3.5.10"
   },
   "devDependencies": {
