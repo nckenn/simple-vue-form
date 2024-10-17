@@ -16,8 +16,9 @@ const appliedOptions = computed(() => control.value.uischema.options || {});
 const {control, handleChange} = useJsonFormsControl(props);
 
 // Watch for changes in input
-const onChange = (e: HTMLInputElement) => {
-  handleChange(control.value.path, e.target.value);
+const onChange = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  handleChange(control.value.path, target.value);
 };
 </script>
 

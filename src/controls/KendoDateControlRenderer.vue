@@ -4,7 +4,7 @@ import {RendererProps, useJsonFormsControl} from '@jsonforms/vue';
 import {ControlElement} from "@jsonforms/core";
 import {Error, Label} from "@progress/kendo-vue-labels";
 import {FieldWrapper} from "@progress/kendo-vue-form";
-import {DatePicker} from "@progress/kendo-vue-dateinputs";
+import {DatePicker, DatePickerChangeEvent} from "@progress/kendo-vue-dateinputs";
 import dayjs from "dayjs";
 
 const props = defineProps<RendererProps<ControlElement>>();
@@ -23,8 +23,9 @@ const inputValue = () => {
 }
 
 // Watch for changes in input
-const onChange = (e: HTMLDataElement) => {
-  const date = dayjs(e.target.value).format('YYYY-MM-DD');
+const onChange = (e: DatePickerChangeEvent) => {
+  const target = e.target as HTMLInputElement;
+  const date = dayjs(target.value).format('YYYY-MM-DD');
   handleChange(control.value.path, date);
 };
 </script>
